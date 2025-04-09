@@ -1,25 +1,47 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>netflix-clone-espanol-amigo</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+    <title>Netflix España - Ver series online, ver películas online</title>
+    <meta name="description" content="Netflix España - Ver series online, ver películas online. Disfruta de series y películas en tu smart TV, consola, PC, Mac, móvil, tableta y más dispositivos." />
+    <meta name="author" content="Netflix Clone" />
 
-    <meta property="og:title" content="netflix-clone-espanol-amigo" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:title" content="Netflix España - Ver series online, ver películas online" />
+    <meta property="og:description" content="Netflix España - Ver series online, ver películas online. Disfruta de series y películas en tu smart TV, consola, PC, Mac, móvil, tableta y más dispositivos." />
+    <meta property="og:image" content="https://assets.nflxext.com/ffe/siteui/vlv3/93da5c27-be66-427c-8b72-5cb39d275279/6de58cc5-c02c-45d0-a1e2-def9a7b8af89/ES-es-20240226-popsignuptwoweeks-perspective_alpha_website_medium.jpg" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta name="twitter:title" content="Netflix España - Ver series online, ver películas online" />
+    <meta name="twitter:description" content="Netflix España - Ver series online, ver películas online" />
+    <meta name="twitter:image" content="https://assets.nflxext.com/ffe/siteui/vlv3/93da5c27-be66-427c-8b72-5cb39d275279/6de58cc5-c02c-45d0-a1e2-def9a7b8af89/ES-es-20240226-popsignuptwoweeks-perspective_alpha_website_medium.jpg" />
+    
+    <!-- Favicon (representando el N rojo de Netflix) -->
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAA1klEQVR4Ae2WIQzDIBBFEdPVs+xEJpKJZCKRyEhmIpHVSEQikUxkJTKZya/JbtKQEFYOw3vJD+HBcf+Wujfz8PDw8JiHKIoWZVkevPe7EMIxURS32+12Q/G1lHIhpXwaj76f3ntWVXVGPwzDKwRBEC9N0+xDX9d1h3OuWAIi+r5/YFFVVYsJvxCRzjnvvEUIcZ5STyml3bYNF3xDluWYhmF4Jfn7rut2WECXELZtu2bDGPPAhDHmnQtMEJHxwU8OsDHWSY5HCHHhhBDihAs/2f71r4GHh4fH3+IDCbLwXzxU5xQAAAAASUVORK5CYII=" type="image/png">
+
+    <!-- Script para manejo de rutas en GitHub Pages (para Single Page Applications) -->
+    <script type="text/javascript">
+      // Script para manejar redirecciones de GitHub Pages para SPA
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
   </head>
 
   <body>
     <div id="root"></div>
-    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <!-- IMPORTANTE: NO QUITAR ESTE SCRIPT O ESTE COMENTARIO -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
