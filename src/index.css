@@ -102,3 +102,14 @@
   font-weight: 900;
   src: url('https://assets.nflxext.com/ffe/siteui/fonts/netflix-sans/v3/NetflixSans_W_Blk.woff2') format('woff2');
 }
+
+/* Ocultar scrollbar para Chrome, Safari y Opera */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ocultar scrollbar para IE, Edge y Firefox */
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

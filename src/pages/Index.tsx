@@ -1,5 +1,6 @@
 
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
@@ -18,6 +19,15 @@ const Index = () => {
       
       {/* Sección Hero con banner principal */}
       <Hero />
+      
+      {/* Acceso directo al catálogo - Para desarrollo */}
+      <div className="container mx-auto px-4 py-4 text-center">
+        <Link to="/catalog">
+          <Button className="bg-[#e50914] hover:bg-[#f40612] text-white text-lg py-6 px-8 rounded">
+            Ver el catálogo (Demo)
+          </Button>
+        </Link>
+      </div>
       
       {/* Características de Netflix */}
       <Features />
