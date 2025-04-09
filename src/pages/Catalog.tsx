@@ -1,13 +1,97 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, Search, ChevronDown } from "lucide-react";
+import { Bell, Search, ChevronDown, Info, Play } from "lucide-react";
+import { 
+  Carousel, 
+  CarouselContent, 
+  CarouselItem, 
+  CarouselPrevious, 
+  CarouselNext 
+} from "@/components/ui/carousel";
+import { cn } from "@/lib/utils";
 
 /**
  * Página principal de catálogo de Netflix
- * Muestra películas y series organizadas por categorías
+ * Muestra películas y series organizadas por categorías con carruseles mejorados
  */
 const Catalog = () => {
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  // Categorías con sus respectivos contenidos
+  const categories = [
+    {
+      id: "popular",
+      title: "Populares en Netflix",
+      items: [
+        { id: "p1", title: "La casa de papel", img: "https://picsum.photos/seed/11/450/253" },
+        { id: "p2", title: "Stranger Things", img: "https://picsum.photos/seed/12/450/253" },
+        { id: "p3", title: "El juego del calamar", img: "https://picsum.photos/seed/13/450/253" },
+        { id: "p4", title: "Ozark", img: "https://picsum.photos/seed/14/450/253" },
+        { id: "p5", title: "Peaky Blinders", img: "https://picsum.photos/seed/15/450/253" },
+        { id: "p6", title: "Breaking Bad", img: "https://picsum.photos/seed/16/450/253" },
+        { id: "p7", title: "The Crown", img: "https://picsum.photos/seed/17/450/253" },
+        { id: "p8", title: "Narcos", img: "https://picsum.photos/seed/18/450/253" },
+      ]
+    },
+    {
+      id: "trending",
+      title: "Tendencias",
+      items: [
+        { id: "t1", title: "Wednesday", img: "https://picsum.photos/seed/21/450/253" },
+        { id: "t2", title: "You", img: "https://picsum.photos/seed/22/450/253" },
+        { id: "t3", title: "Bridgerton", img: "https://picsum.photos/seed/23/450/253" },
+        { id: "t4", title: "Élite", img: "https://picsum.photos/seed/24/450/253" },
+        { id: "t5", title: "Cobra Kai", img: "https://picsum.photos/seed/25/450/253" },
+        { id: "t6", title: "Sex Education", img: "https://picsum.photos/seed/26/450/253" },
+        { id: "t7", title: "The Witcher", img: "https://picsum.photos/seed/27/450/253" },
+        { id: "t8", title: "Dark", img: "https://picsum.photos/seed/28/450/253" },
+      ]
+    },
+    {
+      id: "spanish",
+      title: "Series españolas",
+      items: [
+        { id: "s1", title: "Élite", img: "https://picsum.photos/seed/31/450/253" },
+        { id: "s2", title: "La casa de papel", img: "https://picsum.photos/seed/32/450/253" },
+        { id: "s3", title: "Vis a vis", img: "https://picsum.photos/seed/33/450/253" },
+        { id: "s4", title: "El Ministerio del Tiempo", img: "https://picsum.photos/seed/34/450/253" },
+        { id: "s5", title: "Las chicas del cable", img: "https://picsum.photos/seed/35/450/253" },
+        { id: "s6", title: "Paquita Salas", img: "https://picsum.photos/seed/36/450/253" },
+        { id: "s7", title: "El vecino", img: "https://picsum.photos/seed/37/450/253" },
+        { id: "s8", title: "Alta mar", img: "https://picsum.photos/seed/38/450/253" },
+      ]
+    },
+    {
+      id: "action",
+      title: "Películas de acción",
+      items: [
+        { id: "a1", title: "Extraction", img: "https://picsum.photos/seed/41/450/253" },
+        { id: "a2", title: "6 Underground", img: "https://picsum.photos/seed/42/450/253" },
+        { id: "a3", title: "The Old Guard", img: "https://picsum.photos/seed/43/450/253" },
+        { id: "a4", title: "Project Power", img: "https://picsum.photos/seed/44/450/253" },
+        { id: "a5", title: "Army of the Dead", img: "https://picsum.photos/seed/45/450/253" },
+        { id: "a6", title: "Red Notice", img: "https://picsum.photos/seed/46/450/253" },
+        { id: "a7", title: "The Gray Man", img: "https://picsum.photos/seed/47/450/253" },
+        { id: "a8", title: "Triple Frontier", img: "https://picsum.photos/seed/48/450/253" },
+      ]
+    },
+    {
+      id: "docs",
+      title: "Documentales impactantes",
+      items: [
+        { id: "d1", title: "Tiger King", img: "https://picsum.photos/seed/51/450/253" },
+        { id: "d2", title: "Making a Murderer", img: "https://picsum.photos/seed/52/450/253" },
+        { id: "d3", title: "The Social Dilemma", img: "https://picsum.photos/seed/53/450/253" },
+        { id: "d4", title: "Our Planet", img: "https://picsum.photos/seed/54/450/253" },
+        { id: "d5", title: "Chef's Table", img: "https://picsum.photos/seed/55/450/253" },
+        { id: "d6", title: "Formula 1: Drive to Survive", img: "https://picsum.photos/seed/56/450/253" },
+        { id: "d7", title: "The Last Dance", img: "https://picsum.photos/seed/57/450/253" },
+        { id: "d8", title: "Don't F**k With Cats", img: "https://picsum.photos/seed/58/450/253" },
+      ]
+    }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       {/* Barra de navegación del catálogo */}
@@ -55,7 +139,7 @@ const Catalog = () => {
       </header>
 
       {/* Hero con película destacada */}
-      <section className="relative pt-12 pb-4">
+      <section className="relative pt-16 pb-4">
         <div className="absolute inset-0 bg-[url('https://occ-0-5673-358.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABer7SeWc6FvkBqWtk61GwL7rshAEVCOARQZVTEJGnLXykYBlO4nbbr6gs7M650BjULuaN6hucXKr5xY2iqPAajrxXd70HawdJeuD.jpg?r=608')] bg-cover bg-center h-[80vh]">
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black"></div>
         </div>
@@ -71,16 +155,12 @@ const Catalog = () => {
               Berlín vuelve a las andadas en esta precuela de "La casa de papel" sobre los atracos más extraordinarios del carismático ladrón y su banda.
             </p>
             <div className="flex gap-3">
-              <button className="bg-white text-black py-2 px-6 rounded flex items-center gap-2 hover:bg-gray-200">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path>
-                </svg>
+              <button className="bg-white text-black py-2 px-6 rounded flex items-center gap-2 hover:bg-gray-200 transition-colors">
+                <Play className="w-5 h-5" />
                 Reproducir
               </button>
-              <button className="bg-gray-700/80 text-white py-2 px-6 rounded flex items-center gap-2 hover:bg-gray-600/80">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3ZM1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12ZM13 10V18H11V10H13ZM12 8.5C12.8284 8.5 13.5 7.82843 13.5 7C13.5 6.17157 12.8284 5.5 12 5.5C11.1716 5.5 10.5 6.17157 10.5 7C10.5 7.82843 11.1716 8.5 12 8.5Z" fill="currentColor"></path>
-                </svg>
+              <button className="bg-gray-700/80 text-white py-2 px-6 rounded flex items-center gap-2 hover:bg-gray-600/80 transition-colors">
+                <Info className="w-5 h-5" />
                 Más información
               </button>
             </div>
@@ -88,132 +168,61 @@ const Catalog = () => {
         </div>
       </section>
 
-      {/* Secciones de películas/series */}
-      <div className="relative z-10 mb-12 -mt-32">
-        {/* Fila 1: Populares en Netflix */}
-        <section className="mb-8 px-4">
-          <h2 className="text-xl font-bold mb-2">Populares en Netflix</h2>
-          <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-none">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={`popular-${item}`} className="flex-shrink-0 w-[250px] group">
-                <div className="relative rounded overflow-hidden transition-transform duration-300 group-hover:scale-105 shadow-md">
-                  <img 
-                    src={`https://picsum.photos/seed/${item + 10}/250/141`}
-                    alt={`Popular ${item}`}
-                    className="w-full h-[141px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <button className="bg-white text-black rounded-full p-1 opacity-80 hover:opacity-100">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Fila 2: Tendencias */}
-        <section className="mb-8 px-4">
-          <h2 className="text-xl font-bold mb-2">Tendencias</h2>
-          <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-none">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={`trending-${item}`} className="flex-shrink-0 w-[250px] group">
-                <div className="relative rounded overflow-hidden transition-transform duration-300 group-hover:scale-105 shadow-md">
-                  <img 
-                    src={`https://picsum.photos/seed/${item + 20}/250/141`}
-                    alt={`Trending ${item}`}
-                    className="w-full h-[141px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <button className="bg-white text-black rounded-full p-1 opacity-80 hover:opacity-100">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Fila 3: Series */}
-        <section className="mb-8 px-4">
-          <h2 className="text-xl font-bold mb-2">Series españolas</h2>
-          <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-none">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={`series-${item}`} className="flex-shrink-0 w-[250px] group">
-                <div className="relative rounded overflow-hidden transition-transform duration-300 group-hover:scale-105 shadow-md">
-                  <img 
-                    src={`https://picsum.photos/seed/${item + 30}/250/141`}
-                    alt={`Series ${item}`}
-                    className="w-full h-[141px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <button className="bg-white text-black rounded-full p-1 opacity-80 hover:opacity-100">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Fila 4: Películas */}
-        <section className="mb-8 px-4">
-          <h2 className="text-xl font-bold mb-2">Películas de acción</h2>
-          <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-none">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={`movies-${item}`} className="flex-shrink-0 w-[250px] group">
-                <div className="relative rounded overflow-hidden transition-transform duration-300 group-hover:scale-105 shadow-md">
-                  <img 
-                    src={`https://picsum.photos/seed/${item + 40}/250/141`}
-                    alt={`Movie ${item}`}
-                    className="w-full h-[141px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <button className="bg-white text-black rounded-full p-1 opacity-80 hover:opacity-100">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Fila 5: Documentales */}
-        <section className="mb-8 px-4">
-          <h2 className="text-xl font-bold mb-2">Documentales impactantes</h2>
-          <div className="flex overflow-x-auto gap-2 pb-4 scrollbar-none">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-              <div key={`docs-${item}`} className="flex-shrink-0 w-[250px] group">
-                <div className="relative rounded overflow-hidden transition-transform duration-300 group-hover:scale-105 shadow-md">
-                  <img 
-                    src={`https://picsum.photos/seed/${item + 50}/250/141`}
-                    alt={`Documentary ${item}`}
-                    className="w-full h-[141px] object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 flex items-center justify-center">
-                    <button className="bg-white text-black rounded-full p-1 opacity-80 hover:opacity-100">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 2.69127C4 1.93067 4.81547 1.44851 5.48192 1.81506L22.4069 11.1238C23.0977 11.5037 23.0977 12.4963 22.4069 12.8762L5.48192 22.1849C4.81546 22.5515 4 22.0693 4 21.3087V2.69127Z" fill="currentColor"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* Secciones de películas/series con carruseles mejorados */}
+      <div className="relative z-10 mb-12 -mt-32 px-4">
+        {categories.map((category) => (
+          <section key={category.id} className="mb-12">
+            <h2 className="text-xl font-bold mb-4">{category.title}</h2>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {category.items.map((item) => (
+                  <CarouselItem 
+                    key={item.id} 
+                    className="pl-2 md:pl-4 basis-[250px] md:basis-[300px] lg:basis-1/5"
+                  >
+                    <div 
+                      className={cn(
+                        "relative overflow-hidden rounded-md transition-all duration-300",
+                        hoveredItem === item.id ? "scale-110 z-10 shadow-xl" : "scale-100"
+                      )}
+                      onMouseEnter={() => setHoveredItem(item.id)}
+                      onMouseLeave={() => setHoveredItem(null)}
+                    >
+                      <img 
+                        src={item.img} 
+                        alt={item.title}
+                        className="w-full aspect-video object-cover transition-transform duration-500"
+                      />
+                      {hoveredItem === item.id && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-3 transition-opacity duration-300">
+                          <div>
+                            <h3 className="text-sm font-medium mb-1">{item.title}</h3>
+                            <div className="flex gap-2">
+                              <button className="bg-white text-black p-1.5 rounded-full hover:bg-gray-200 transition-colors">
+                                <Play className="w-3 h-3" />
+                              </button>
+                              <button className="border border-white/40 p-1.5 rounded-full hover:border-white transition-colors">
+                                <Plus className="w-3 h-3" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-1 bg-black/50 hover:bg-black/80" />
+              <CarouselNext className="right-1 bg-black/50 hover:bg-black/80" />
+            </Carousel>
+          </section>
+        ))}
       </div>
 
       {/* Pie de página */}
@@ -261,5 +270,25 @@ const Catalog = () => {
     </div>
   );
 };
+
+// Componente Plus para el botón de agregar a mi lista
+const Plus = ({ className }: { className?: string }) => (
+  <svg 
+    width="24" 
+    height="24" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path 
+      d="M12 4V20M4 12H20" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export default Catalog;
